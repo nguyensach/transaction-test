@@ -1,0 +1,80 @@
+import nu.studer.gradle.jooq.JooqEdition
+
+plugins {
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+    id 'nu.studer.jooq' version '5.1.1'
+}
+
+group = 'com.transaction'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    jooqGenerator 'mysql:mysql-connector-java:8.0.18'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jooq {
+    // use jOOQ version defined in Spring Boot
+    version = dependencyManagement.importedProperties['jooq.version']
+    edition = JooqEdition.OSS
+
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'com.mysql.cj.jdbc.Driver'
+                    url = 'jdbc:mysql://localhost:3306/transaction_test'
+                    user = 'root'
+                    password = ''
+                    properties {
+                        property {
+                            key = 'PAGE_SIZE'
+                            value = 2048
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.mysql.MySQLDatabase'
+                        inputSchema = 'transaction_test'
+                        outputSchema = 'transaction_test'
+                        includes = '.*'
+                        excludes = ''
+                        includeTables = true
+                    }
+                    target {
+                        packageName = 'com.transaction.demo.db.transaction'
+                        directory = 'src/main/db/'
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
+    }
+}
