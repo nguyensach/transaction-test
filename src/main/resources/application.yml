@@ -4,6 +4,8 @@ spring:
     url: jdbc:mysql://localhost:3306/transaction_test
     username: root
     driverClassName: com.mysql.cj.jdbc.Driver
+    maximum-pool-size: 5
+    minimum-idle: 5
   # jOOQ
   jooq:
     sql-dialect: MYSQL

@@ -13,7 +13,7 @@ public class DemoApplication {
   public static void main(String[] args) {
     ApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
     UserService service = applicationContext.getBean(UserService.class);
-    for (var i = 1; i < 10; i++)
+    for (var i = 1; i < 21; i++)
       service.test(String.valueOf(i));
   }
 }

@@ -25,6 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
     System.out.println("Current thread: " + Thread.currentThread().getName());
     for (var i = 0; i < 2; i++) {
       try {
+        Thread.sleep(10_000);
         var transactionProvider = context.configuration().transactionProvider();
         Field f = transactionProvider.getClass().getDeclaredField("transactionManager");
         f.setAccessible(true);
@@ -34,6 +35,8 @@ public class UserRepositoryImpl implements UserRepository {
       } catch (NoSuchFieldException e) {
         e.printStackTrace();
       } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      } catch (InterruptedException e) {
         e.printStackTrace();
       }
     }
