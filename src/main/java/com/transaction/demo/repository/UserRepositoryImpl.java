@@ -30,7 +30,8 @@ public class UserRepositoryImpl implements UserRepository {
         Field f = transactionProvider.getClass().getDeclaredField("transactionManager");
         f.setAccessible(true);
         DataSourceTransactionManager transactionManager = (DataSourceTransactionManager) f.get(transactionProvider);
-        System.out.println("Connection: " + ((ConnectionHolder) TransactionSynchronizationManager.getResource(transactionManager.getDataSource())).getConnection().hashCode() + " in: " + Thread.currentThread().getName());
+        var connection = ((ConnectionHolder) TransactionSynchronizationManager.getResource(transactionManager.getDataSource())).getConnection();
+        System.out.println("Connection: " + connection + " in: " + Thread.currentThread().getName());
         context.insertInto(USER).set(USER.NAME, name + i).execute();
       } catch (NoSuchFieldException e) {
         e.printStackTrace();
