@@ -10,3 +10,6 @@ spring:
   # jOOQ
   jooq:
     sql-dialect: MYSQL
+logging:
+  level:
+    root: DEBUG
