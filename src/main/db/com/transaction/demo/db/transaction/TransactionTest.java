@@ -4,6 +4,7 @@
 package com.transaction.demo.db.transaction;
 
 
+import com.transaction.demo.db.transaction.tables.DeliveryProgress;
 import com.transaction.demo.db.transaction.tables.User;
 
 import java.util.Arrays;
@@ -20,12 +21,17 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TransactionTest extends SchemaImpl {
 
-    private static final long serialVersionUID = 945829504;
+    private static final long serialVersionUID = -1021767191;
 
     /**
      * The reference instance of <code>transaction_test</code>
      */
     public static final TransactionTest TRANSACTION_TEST = new TransactionTest();
+
+    /**
+     * The table <code>transaction_test.delivery_progress</code>.
+     */
+    public final DeliveryProgress DELIVERY_PROGRESS = DeliveryProgress.DELIVERY_PROGRESS;
 
     /**
      * The table <code>transaction_test.user</code>.
@@ -48,6 +54,7 @@ public class TransactionTest extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
+            DeliveryProgress.DELIVERY_PROGRESS,
             User.USER);
     }
 }

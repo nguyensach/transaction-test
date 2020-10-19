@@ -4,7 +4,9 @@
 package com.transaction.demo.db.transaction;
 
 
+import com.transaction.demo.db.transaction.tables.DeliveryProgress;
 import com.transaction.demo.db.transaction.tables.User;
+import com.transaction.demo.db.transaction.tables.records.DeliveryProgressRecord;
 import com.transaction.demo.db.transaction.tables.records.UserRecord;
 
 import org.jooq.Identity;
@@ -31,8 +33,8 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<DeliveryProgressRecord> KEY_DELIVERY_PROGRESS_PRIMARY = UniqueKeys0.KEY_DELIVERY_PROGRESS_PRIMARY;
     public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = UniqueKeys0.KEY_USER_PRIMARY;
-    public static final UniqueKey<UserRecord> KEY_USER_NAME = UniqueKeys0.KEY_USER_NAME;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -48,7 +50,7 @@ public class Keys {
     }
 
     private static class UniqueKeys0 {
+        public static final UniqueKey<DeliveryProgressRecord> KEY_DELIVERY_PROGRESS_PRIMARY = Internal.createUniqueKey(DeliveryProgress.DELIVERY_PROGRESS, "KEY_delivery_progress_PRIMARY", new TableField[] { DeliveryProgress.DELIVERY_PROGRESS.DELIVERY_CONTENT_ID }, true);
         public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = Internal.createUniqueKey(User.USER, "KEY_user_PRIMARY", new TableField[] { User.USER.ID }, true);
-        public static final UniqueKey<UserRecord> KEY_USER_NAME = Internal.createUniqueKey(User.USER, "KEY_user_name", new TableField[] { User.USER.NAME }, true);
     }
 }

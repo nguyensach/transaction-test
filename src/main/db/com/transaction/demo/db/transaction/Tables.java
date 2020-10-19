@@ -4,6 +4,7 @@
 package com.transaction.demo.db.transaction;
 
 
+import com.transaction.demo.db.transaction.tables.DeliveryProgress;
 import com.transaction.demo.db.transaction.tables.User;
 
 
@@ -12,6 +13,11 @@ import com.transaction.demo.db.transaction.tables.User;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>transaction_test.delivery_progress</code>.
+     */
+    public static final DeliveryProgress DELIVERY_PROGRESS = DeliveryProgress.DELIVERY_PROGRESS;
 
     /**
      * The table <code>transaction_test.user</code>.
