@@ -21,17 +21,12 @@ public class DemoApplication {
       UserService service = applicationContext.getBean(UserService.class);
 
       CompletableFuture<Void>[] results = new CompletableFuture[20];
-
-      for (var i = 1; i < 21; i++)
-        results[i - 1] = service.test(String.valueOf(i));
-
       CompletableFuture<Void> failure = new CompletableFuture();
-      for (CompletableFuture<Void> f: results) {
-        f.exceptionally(ex -> {
+      for (var i = 1; i < 21; i++)
+        results[i - 1] = service.test(String.valueOf(i)).exceptionally(ex -> {
           failure.completeExceptionally(ex);
           return null;
         });
-      }
 
       try {
         CompletableFuture.anyOf(failure, CompletableFuture.allOf(results)).join();
