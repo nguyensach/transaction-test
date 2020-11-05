@@ -21,19 +21,12 @@ import static com.transaction.demo.cofig.ThreadPoolTaskConfig.TEST_THREAD_POOL;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-  @Qualifier(TEST_THREAD_POOL) private final Executor threadPool;
-
 
   @Override
   @Async(TEST_THREAD_POOL)
   public CompletableFuture<Void> test(String name) {
     log.info("start insert {}, in {}", name, Thread.currentThread().getName());
-    try {
-      userRepository.insert(name);
-    } catch (Exception e) {
-      ((ThreadPoolTaskExecutor) threadPool).shutdown();
-//      throw e;
-    }
+    userRepository.insert(name);
 
     log.info("end insert {}, in {}", name, Thread.currentThread().getName());
     return CompletableFuture.completedFuture(null);
