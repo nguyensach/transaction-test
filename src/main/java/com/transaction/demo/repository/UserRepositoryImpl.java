@@ -29,7 +29,6 @@ public class UserRepositoryImpl implements UserRepository {
     log.info("Current thread: {}", Thread.currentThread().getName());
     for (var i = 0; i < 2; i++) {
       try {
-        Thread.sleep(1_000);
         TransactionProvider transactionProvider = context.configuration().transactionProvider();
         Field f = transactionProvider.getClass().getDeclaredField("transactionManager");
         f.setAccessible(true);
@@ -37,11 +36,10 @@ public class UserRepositoryImpl implements UserRepository {
         Connection connection = ((ConnectionHolder) TransactionSynchronizationManager.getResource(transactionManager.getDataSource())).getConnection();
         log.info("Connection: {}, in {}", connection, Thread.currentThread().getName());
         context.insertInto(USER).set(USER.NAME, name + i).execute();
+        throw new RuntimeException("test exception");
       } catch (NoSuchFieldException e) {
         e.printStackTrace();
       } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      } catch (InterruptedException e) {
         e.printStackTrace();
       }
     }

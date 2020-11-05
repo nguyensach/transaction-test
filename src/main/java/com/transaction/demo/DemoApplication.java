@@ -24,7 +24,13 @@ public class DemoApplication {
     for (var i = 1; i < 21; i++)
       results[i - 1] = service.test(String.valueOf(i));
 
-    CompletableFuture.allOf(results).join();
+    log.info("start join");
+    try {
+      CompletableFuture.allOf(results).join();
+    } catch (Exception e) {
+      log.error("exception in main thread {}", e);
+    }
+
     log.info("End application");
   }
 }
